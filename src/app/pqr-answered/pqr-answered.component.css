@@ -1,0 +1,18 @@
+.mat-form-fieldnot {
+    display: inline-flex;
+    align-items: baseline;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: large;
+}
+
+.page-link{
+    color: #053953;
+}
+.mat-column-id {
+    flex: 0 0 10%;
+}
+.mat-column-title {
+    flex: 0 0 50%;
+    margin-right: 5%;
+}

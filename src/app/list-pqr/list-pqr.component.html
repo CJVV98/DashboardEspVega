@@ -1,0 +1,86 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Listado de PQR's</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <div class="row">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Buscar por</mat-label>
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <mat-table [dataSource]="dataSource" matSort>
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header width="80"> N° </mat-header-cell>
+                                    <mat-cell *matCellDef="let j = index;"> {{j+1}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+
+
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="lastname">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="email">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                                </ng-container>
+
+                                
+                                <ng-container matColumnDef="message">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Mensaje </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.message}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Estado
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.status =='1' ? 'Contestada' : 'Pendiente'}}
+                                    </mat-cell>
+                                </ng-container>
+
+
+                                
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> <button mat-stroked-button (click)="send(element)" color="primary" style="display:{{element.status =='1' ? 'none' : 'content'}}">Responder</button>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                             
+
+                                <mat-header-row *matHeaderRowDef="displayedColums"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColums;"></mat-row>
+                            </mat-table>
+                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

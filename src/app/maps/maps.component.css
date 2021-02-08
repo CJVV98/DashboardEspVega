@@ -1,0 +1,12 @@
+.page-link{
+    color: #053953;
+}
+
+.mat-column-address {
+    flex: 0 0 50%;
+    margin-right: 3%;
+}
+.mat-column-city {
+    flex: 0 0 28%;
+    margin-right: 2%;
+}

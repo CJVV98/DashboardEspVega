@@ -1,0 +1,120 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Listado de usuarios</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <div class="row">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Buscar por</mat-label>
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <mat-table [dataSource]="dataSource" matSort>
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header width="80"> N° </mat-header-cell>
+                                    <mat-cell *matCellDef="let j = index;"> {{j+1}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+
+
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="lastname">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="email">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="phone">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="code">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.code}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Estado
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.active =='1' ? 'Activo' :
+                                        'Inactivo'}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <a class="nav-link" href="javascript:void(0)" (click)="openDialog(row)"
+                                            style="display: contents;">
+                                            <i class="material-icons">zoom_in</i>
+                                        </a>
+                                        &nbsp;
+                                        <a class="nav-link" href="javascript:void(0)" (click)="delete(row)"
+                                            style="display: contents;">
+                                            <i class="material-icons">auto_delete</i>
+                                        </a>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColums"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColums;"></mat-row>
+                            </mat-table>
+                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <mat-accordion class="example-headers-align" multi>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Cargar facturas
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <a class="nav-link" href="javascript:void(0)" (click)="loadRecommendations()"
+                                    style="display: contents; ">
+                                    <i class="material-icons" style="margin-left:85%;">help</i>
+                                </a>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        Archivo .csv de facturas : <input class="form-control" type="file" accept=".csv" (change)="onChange($event)">
+                        <br>
+                        <button mat-raised-button color="primary" type="submit"  (click)="load()">Cargar</button>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>

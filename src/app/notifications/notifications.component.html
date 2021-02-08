@@ -1,0 +1,146 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title"><strong>Registrar Noticias</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        <br>
+                        <form [formGroup]="form" #frmDatos="ngForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="mat-form-fieldnot">
+                                        <input matInput placeholder="Titulo" formControlName="title" minlength="5"
+                                            maxlength="80" required>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="mat-form-fieldnot">
+                                        <input matInput placeholder="Autor" formControlName="autor" minlength="5"
+                                            maxlength="40" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="mat-form-fieldnot">
+                                        <input matInput placeholder="Recursos adicionales"
+                                            formControlName="url_resource" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="file" (change)="onChange($event)" required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="mat-form-fieldnot">
+                                        <textarea matInput placeholder="Agregar contenido de la noticia"
+                                            formControlName="content" minlength="25" required></textarea>
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+                            <div *ngIf="edit; else elseBlock">
+                                <button mat-raised-button type="submit" [disabled]="frmDatos.invalid" (click)="update()"
+                                class="btn btn-success pull-right"  >Editar</button>
+                            
+                                <button mat-raised-button type="submit" (click)="initForm()"
+                                    class="btn btn-success pull-right" >Cancelar</button>
+                                <div class="clearfix"></div>
+                            </div>
+                            <ng-template #elseBlock>
+                                <button mat-raised-button type="submit" [disabled]="frmDatos.invalid" (click)="insert()"
+                                class="btn btn-success pull-right" >Registrar</button>
+                            </ng-template>
+                          
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title mt-0"><strong>Listado de noticias</strong> </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <mat-form-field>
+                                <mat-label>Buscar por</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                            </mat-form-field>
+                            <mat-table [dataSource]="dataSource" matSort>
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header width="80"> ID </mat-header-cell>
+                                    <mat-cell *matCellDef="let j = index;"> {{j+1}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+
+                                <ng-container matColumnDef="title">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Titulo </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="autor">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Autor </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.autor}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="date">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de registro
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.created_at | date:'yyyy-MM-dd'}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+
+                                        <a class="nav-link" href="javascript:void(0)" (click)="openDialog(row)"
+                                            style="display: contents;">
+                                            <i class="material-icons">zoom_in</i>
+                                        </a>
+                                        &nbsp;
+                                        <a class="nav-link" href="javascript:void(0)" style="display: contents;"
+                                            (click)="editData(row)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        &nbsp;
+                                        <a class="nav-link" href="javascript:void(0)" style="display: contents;"
+                                            (click)="delete(row)">
+                                            <i class="material-icons">auto_delete</i>
+                                        </a>
+
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColums"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColums;"></mat-row>
+                            </mat-table>
+                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

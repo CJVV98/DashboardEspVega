@@ -1,0 +1,8 @@
+.news-p{
+    text-align: justify;
+}
+.title{
+    text-transform: uppercase;
+    color:white !important;
+    background:linear-gradient(60deg, rgb(0, 132, 197), rgb(8, 20, 26));
+}
