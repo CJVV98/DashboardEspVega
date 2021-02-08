@@ -29,7 +29,9 @@ export class ListUserComponent implements OnInit {
   ngOnInit(): void {
       this.consultUsers();
   }
-
+  /**
+   * Consultar usuarios
+   */
   consultUsers(){
       this.service.consult().subscribe(data=>{
         this.dataSource = new MatTableDataSource(data.data);
@@ -37,39 +39,62 @@ export class ListUserComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       })
   }
-
+  /**
+   * Aplicar filtros
+   * @param event 
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
+  /**
+   * Mostrar mensaje
+   * @param message mensaje
+   * @param action tipo de accion
+   */
   showMessage(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 1000,
     });
 
   }
-
+  /**
+   * Eliminar
+   * @param row datos del usuario
+   */
   delete(row: any){
      this.service.delete(row.id).subscribe(data=>{
-        this.showMessage('Se ha eliminado correctamente la noticia', 'Eliminar');
+        this.showMessage('Se ha eliminado correctamente el usuario', 'Eliminar');
         this.consultUsers();
      });
   }
+
+  /**
+   * Abrir Dialogo de Facturas
+   * @param element 
+   */
   openDialog(element: any) {
     this.dialog.open(UserInvoiceComponent, {
       data:element,
     });
   }
-
+  /**
+   * Cargar recomendaciones del archivo
+   */
   loadRecommendations(){
     this.dialog.open(RecommendationsComponent, {
     });
-  }
+  } 
+  /**
+   * Cambio de archivo 
+   * @param event 
+   */
   onChange(event) {
     this.file = event.target.files[0];
   }
-
+  /**
+   * Cargar el archivo
+   */
   load(){
       this.serviceFile.create(this.file).subscribe(()=>{
         this.showMessage('Se ha cargado exitosamente el archivo', 'Registro');

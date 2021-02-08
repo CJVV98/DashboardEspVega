@@ -19,6 +19,9 @@ declare var $: any;
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
+/**
+ * Clase encargada del manejo de noticias
+ */
 export class NotificationsComponent implements OnInit {
   shortLink: string = "";
   dataSource=  new MatTableDataSource<News>();
@@ -39,7 +42,9 @@ export class NotificationsComponent implements OnInit {
     this.initForm();
     this.consultNews();
   }
-
+  /**+
+   * Consultar noticias
+   */
   consultNews() {
     this.service.consult().subscribe(data => {
       this.dataSource = new MatTableDataSource(data.data);
@@ -48,6 +53,9 @@ export class NotificationsComponent implements OnInit {
     });
 
   }
+  /**
+   * Registrar noticias
+   */
   insert() {
     let datosN = new News();
     datosN.autor = this.form.value['autor'];
@@ -62,14 +70,20 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Mostrar mensaje
+   * @param message mensaje
+   * @param action tipo de accion
+   */
   showMessage(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 1000,
     });
 
   }
-
+  /**
+   * InicialiAr formularios
+   */
   initForm() {
     this.form = new FormGroup({
       'title': new FormControl(''),
@@ -81,15 +95,20 @@ export class NotificationsComponent implements OnInit {
     this.edit=false;
     this.file = null;
   }
-  showNotification(from, align) {
+  showNotification(from, align) { }
 
-  }
-
+  /**
+   * Cargar Archivo
+   * @param event archivo
+   */
   onChange(event) {
     this.file = event.target.files[0];
   }
 
-  // OnClick of button Upload 
+
+  /**
+   * Cargar archivo al backend
+   */
   onUpload() {
     this.loading = !this.loading;
     console.log(this.file);
@@ -105,26 +124,38 @@ export class NotificationsComponent implements OnInit {
       }
     );
   }
-
+  /**
+   * Mostrar dialogo con los detalles de la noticia
+   * @param element 
+   */
   openDialog(element: any) {
     this.dialog.open(MoreNotificationComponent, {
       data:element,
     });
   }
-
+  /**
+   * Aplicar filtros de noticias
+   * @param event 
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
+  /**
+   * Eliminar noticias
+   * @param row datos de la noticia
+   */
   delete(row:any){
     this.service.delete(row.id).subscribe(data=>{
       this.showMessage('Se ha eliminado correctamente la noticia', 'Eliminar');
       this.consultNews();
     });
   }
-
+  /**
+   * Cargar datos de la noticia en form
+   * @param row 
+   */
   editData(row:any){
     this.dataNews=new News();
     this.edit=true;
@@ -137,7 +168,9 @@ export class NotificationsComponent implements OnInit {
       'content': new FormControl(row.content)
     });
   }
-  
+  /**
+   * Actualizar datos de la noticia
+   */
   update(){
     this.dataNews.autor = this.form.value['autor'];
     this.dataNews.title = this.form.value['title'];

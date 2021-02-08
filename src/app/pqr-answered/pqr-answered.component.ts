@@ -19,7 +19,9 @@ export class PqrAnsweredComponent implements OnInit {
     console.log(this.data);
     this.initForm() ;
   }
-
+  /**
+   * Enviar PQR a usuario
+   */
   send(){
       this.pqr=new PqrAnswered();
       this.pqr.pqr_id=this.data.id;
@@ -29,7 +31,11 @@ export class PqrAnsweredComponent implements OnInit {
         this.initForm();
       });
   }
-
+  /**
+   * Mostrar mensaje
+   * @param message mensaje
+   * @param action tipo de accion
+   */
   showMessage(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 1000,

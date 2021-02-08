@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+/**
+ * Clase encargada del manejo del menu principal
+ */
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
@@ -33,7 +36,9 @@ export class NavbarComponent implements OnInit {
          }
      });
     }
-
+    /**
+     * Abrir menu 
+     */
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
@@ -45,12 +50,19 @@ export class NavbarComponent implements OnInit {
 
         this.sidebarVisible = true;
     };
+    /**
+     * Cerrar Menu
+     */
     sidebarClose() {
         const body = document.getElementsByTagName('body')[0];
         this.toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
         body.classList.remove('nav-open');
     };
+
+    /**
+     * Adaptar menu de acuerdo al titulo
+     */
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const body = document.getElementsByTagName('body')[0];

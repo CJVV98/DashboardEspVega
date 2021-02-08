@@ -14,6 +14,9 @@ import { InvoiceService } from 'app/_services/invoice.service';
   templateUrl: './user-invoice.component.html',
   styleUrls: ['./user-invoice.component.css']
 })
+/**
+ * Facturas de venta por usuario
+ */
 export class UserInvoiceComponent implements OnInit {
   dataSource=  new MatTableDataSource<Invoice>();
   displayedColums: string[] = [ 'code', 'date', 'total'];
@@ -24,6 +27,9 @@ export class UserInvoiceComponent implements OnInit {
   ngOnInit(): void {
      this.consultInvoice();
   }
+  /**
+   * Consultar Facturas de venta
+   */
   consultInvoice(){
       this.service.show(this.data.code).subscribe(data=>{
         this.dataSource = new MatTableDataSource(data.data);
@@ -31,7 +37,10 @@ export class UserInvoiceComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       })
   }
-
+  /**
+   * Aplicar filtros sobre tabla
+   * @param event 
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

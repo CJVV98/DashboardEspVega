@@ -14,6 +14,9 @@ import { PqrAnsweredComponent } from '../pqr-answered/pqr-answered.component';
   templateUrl: './list-pqr.component.html',
   styleUrls: ['./list-pqr.component.css']
 })
+/**
+ * Clase encargada del manenejo de PQR
+ */
 export class ListPqrComponent implements OnInit {
   dataSource=  new MatTableDataSource<Pqr>();
   displayedColums: string[] = ['id', 'name', 'lastname', 'email', 'message','status','actions'];
@@ -24,7 +27,9 @@ export class ListPqrComponent implements OnInit {
   ngOnInit() {
       this.consult();
   }
-
+  /**
+   * Consultar PQR
+   */
   consult(){
       this.service.consult().subscribe(data=>{
         this.dataSource = new MatTableDataSource(data.data);
@@ -32,12 +37,18 @@ export class ListPqrComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       })
   }
-
+  /**
+   * Aplicar filtros de busqueda
+   * @param event 
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
+  /**
+   * Enviar respuesta del PQR
+   * @param element 
+   */
   send(element: any){
     this.dialog.open(PqrAnsweredComponent, {
       data:element
