@@ -5,4 +5,5 @@ export class User{
     phone:string;
     active:string;
     code:number;
+    password:string;
 }

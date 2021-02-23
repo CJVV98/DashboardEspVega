@@ -2,6 +2,10 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { PqrService } from '../../_services/pqr.service';
+import { Pqr } from 'app/models/Pqr';
+import { UsersService } from 'app/_services/users.service';
+import { PointsService } from 'app/_services/points.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,18 +16,24 @@ import { Router } from '@angular/router';
  * Clase encargada del manejo del menu principal
  */
 export class NavbarComponent implements OnInit {
+    listPqr: Pqr[];
+    pqrNumber:number;
+    pointsCount:number;
+    userCount: number;
+    userSinfaCount:number;
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private servicePqr:PqrService) {
       this.location = location;
           this.sidebarVisible = false;
     }
 
     ngOnInit(){
+      this.consultPending();
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
@@ -35,6 +45,15 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+    }
+
+    consultPending(){
+        this.servicePqr.consultPending().subscribe(data=>{
+            this.listPqr=data.data;
+            console.log(this.listPqr);
+            this.pqrNumber=this.listPqr.length;
+        });
+      
     }
     /**
      * Abrir menu 

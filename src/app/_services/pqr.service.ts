@@ -18,8 +18,17 @@ export class PqrService {
     return this.http.get<any>(`${this.url}`);
   }
 
+
+  consultPending (){
+    return this.http.get<any>(`${environment.HOST}pqrresponse`);
+  }
+
   delete(id:any){
     return this.http.delete(`${this.url}/${id}`);
+  }
+
+  consultCount(){
+    return this.http.get<any>(`${environment.HOST}pqr-count`);
   }
 
 }

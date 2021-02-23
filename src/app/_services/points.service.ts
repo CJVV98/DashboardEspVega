@@ -22,4 +22,8 @@ export class PointsService {
     return this.http.delete(`${this.url}/${id}`);
   }
 
+
+  consultCount(){
+    return this.http.get<any>(`${environment.HOST}points-count`);
+  }
 }

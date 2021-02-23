@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PointsService } from 'app/_services/points.service';
+import { PqrService } from 'app/_services/pqr.service';
+import { UsersService } from 'app/_services/users.service';
 import * as Chartist from 'chartist';
 
 @Component({
@@ -7,8 +10,12 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  pqrNumber:number;
+  pointsCount:number;
+  userCount: number;
+  userSinfaCount:number;
+  constructor(private servicePqr:PqrService,private servicePoint:PointsService, private serviceUser:UsersService) { }
+ 
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -67,7 +74,7 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit() {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
+      this.consultCounts();
       const dataDailySalesChart: any = {
           labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
           series: [
@@ -146,5 +153,12 @@ export class DashboardComponent implements OnInit {
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
   }
-
+  consultCounts(){
+    this.serviceUser.consultCount().subscribe(data=>{
+        this.userCount=data.data;
+        this.userSinfaCount=data.dataSinfa;
+        this.pqrNumber=data.dataPqr;
+        this.pointsCount=data.dataPoints;
+    });
+  }
 }

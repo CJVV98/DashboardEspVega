@@ -16,15 +16,13 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">notifications</i>
-                        <span class="notification">3</span>
+                        <span class="notification">{{pqrNumber}}</span>
                         <p>
                             <span class="d-lg-none d-md-block">Some Actions</span>
                         </p>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="javascript:void(0)">Error en pago....</a>
-                        <a class="dropdown-item" href="javascript:void(0)">Daño de pagina...</a>
-                        <a class="dropdown-item" href="javascript:void(0)">YError en vistas...</a>
+                    <div class="dropdown-menu dropdown-menu-right" *ngFor="let item of listPqr" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="javascript:void(0)">{{item.message}}</a>
                     </div>
                 </li>
                 <li class="nav-item">
